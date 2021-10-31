@@ -85,6 +85,7 @@ STOVE Dev Camp 서버 전형 과제
   |list_id|INTEGER|`FK list.id` `NOT NULL`||글 목록 외부 키|
   |title|STRING(40)|`NOT NULL`||글 제목|
   |contents|TEXT||BLANK('')|글 내용|
+  |views|INTEGER||0|조회수|
   |trackback_link|`UNIQUE` `NOT NULL`|기본 생성해줘야 함|트랙백 링크를 위한 식별|
   |created_at|DATETIME||now()|생성 시간|
   |updated_at|DATETIME||now()|수정 시간|

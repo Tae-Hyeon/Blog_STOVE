@@ -8,14 +8,15 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Entity
 @Table(name = "blogger")
 public class Blogger {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -30,9 +31,14 @@ public class Blogger {
     @Column(name = "password")
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "authority")
-    private String authority;
+    private Authority authority;
 
-    @OneToMany(mappedBy = "blog", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "blogger", cascade = CascadeType.REMOVE)
     List<Blog> blogs = new ArrayList<>();
+
+    public enum Authority {
+        ROLE_BLOGGER, ROLE_ADMIN
+    }
 }

@@ -21,8 +21,8 @@ public class SessionProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) authentication;
-        System.out.println("프로바이더");
-        System.out.println(authenticationToken.toString());
+        //System.out.println("세션 프로바이더");
+        //System.out.println(authenticationToken.toString());
         String email = authenticationToken.getName();
         String password = (String) authenticationToken.getCredentials();
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);

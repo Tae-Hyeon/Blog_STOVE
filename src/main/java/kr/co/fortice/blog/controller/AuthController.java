@@ -24,20 +24,6 @@ import java.util.Map;
 public class AuthController {
     private final AuthService authService;
 
-    @PostMapping("/signin")
-    public String signin(@Valid @ModelAttribute("request") SignInRequest request, Model model, Authentication authentication) {
-        //authService.signin(request);
-        System.out.println(request.getEmail() + '\n');
-//        System.out.println(authentication.toString());
-        System.out.println(SecurityContextHolder.getContext().toString());
-//        if(authentication.isAuthenticated()) {
-//            model.addAttribute("name", authentication.getAuthorities());
-//            model.addAttribute("detail", authentication.getDetails());
-//            model.addAttribute("id", authentication.getPrincipal());
-//        }
-        return "blog_main";
-    }
-
     @PostMapping("/signup")
     public String signup(@Valid @ModelAttribute("request") SignUpRequest request, Model model) throws Exception{
         return authService.signup(request);

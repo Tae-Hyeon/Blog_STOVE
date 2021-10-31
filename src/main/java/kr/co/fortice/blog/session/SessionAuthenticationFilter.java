@@ -13,6 +13,7 @@ public class SessionAuthenticationFilter extends UsernamePasswordAuthenticationF
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+        //System.out.println("인증 실행");
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
                 request.getParameter("email"),
                 request.getParameter("password")

@@ -34,20 +34,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public SessionAuthenticationFilter sessionAuthenticationFilter() throws Exception{
         SessionAuthenticationFilter sessionAuthenticationFilter = new SessionAuthenticationFilter(authenticationManager());
-        sessionAuthenticationFilter.setFilterProcessesUrl("/auth/login");
+        sessionAuthenticationFilter.setFilterProcessesUrl("/auth/signin");
         sessionAuthenticationFilter.setAuthenticationSuccessHandler(signInSuccessHandler());
         sessionAuthenticationFilter.afterPropertiesSet();
         return sessionAuthenticationFilter;
     }
     @Bean
     public SessionProvider sessionProvider() {
-        return new SessionProvider(passwordEncoder());
+        return new SessionProvider(userDetailsService, passwordEncoder());
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(sessionProvider());
-        //auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     // Pass
@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.addFilterBefore(sessionAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.csrf().disable()
                 // 인증이 필요한 경우인지 ant형식으로 url 지정
                 .authorizeRequests()
@@ -73,12 +74,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/index")
                     .failureUrl("/index")
-                    .permitAll()
-
-                .and()
-                    .addFilterBefore(sessionAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                    .successForwardUrl("/index")
+//                    .permitAll()
 
                 // logout 설정
+                .and()
                 .logout()
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)

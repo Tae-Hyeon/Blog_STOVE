@@ -59,7 +59,7 @@ STOVE Dev Camp 서버 전형 과제
   |blogger_id|INTEGER|`FK blogger.id` `UNIQUE` `NOT NULL`||외부 키|
   |title|STRING(40)|`NOT NULL`||블로그 이름|
   |subtitle|STRING(100)||BLANK('')|블로그 소개|
-  |trackback|TINYINT(1)|`NOT NULL`|0|0: 동의<br>1: 거부|
+  |trackback|BIT|`NOT NULL`|1|1: 동의<br>0: 거부|
 
 
 - 글 목록 (list)

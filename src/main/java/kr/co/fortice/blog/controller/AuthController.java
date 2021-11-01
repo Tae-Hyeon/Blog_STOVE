@@ -3,6 +3,7 @@ package kr.co.fortice.blog.controller;
 import kr.co.fortice.blog.dto.request.SignInRequest;
 import kr.co.fortice.blog.dto.request.SignUpRequest;
 import kr.co.fortice.blog.service.AuthService;
+import kr.co.fortice.blog.session.SessionUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -27,5 +29,17 @@ public class AuthController {
     @PostMapping("/signup")
     public String signup(@Valid @ModelAttribute("request") SignUpRequest request, Model model) throws Exception{
         return authService.signup(request);
+    }
+
+    @PostMapping("/signin")
+    public String signin(HashMap<String, Object> model) throws Exception{
+        Integer bloggerId = SessionUtil.getSessionBloggerId();
+
+        model.put("isAuthenticated", true);
+        model.put("blogger", authService.getBloggerInfo(bloggerId));
+
+        System.out.println(model.toString());
+
+        return "index";
     }
 }

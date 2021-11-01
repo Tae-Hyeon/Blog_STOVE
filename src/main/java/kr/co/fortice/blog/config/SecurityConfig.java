@@ -65,16 +65,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 // 인증이 필요한 경우인지 ant형식으로 url 지정
                 .authorizeRequests()
-                        .antMatchers("/index").permitAll()
+                        .antMatchers("/").permitAll()
                         .antMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
 
                 // 로그인 폼 설정
                 .and()
                 .formLogin()
-                    .loginPage("/index")
-                    .failureUrl("/index")
-                    .successForwardUrl("/index")
+                    .loginPage("/")
+                    .failureUrl("/")
+                    .successForwardUrl("/")
 //                    .permitAll()
 
                 // logout 설정

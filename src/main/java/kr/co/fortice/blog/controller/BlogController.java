@@ -1,28 +1,26 @@
 package kr.co.fortice.blog.controller;
 
+import kr.co.fortice.blog.dto.request.BlogCreateRequest;
 import kr.co.fortice.blog.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping(value = "/blog")
 public class BlogController {
     private final BlogService blogService;
 
-    @GetMapping(value = "/{blogId}")
-    public ResponseEntity getBlogMain( @PathVariable("blogId") Integer blogId ) {
-
-        return ResponseEntity.ok(getBlogMain(blogId));
+    @GetMapping(value = "/{name}")
+    public ResponseEntity getBlogMain(@PathVariable("name") String name) {
+        blogService.getBlogMain(name);
+        return ResponseEntity.ok();
     }
 
-    @PostMapping(value = "/")
-    public ResponseEntity createBlog() {
-        return ResponseEntity.ok(createBlog());
+    @PostMapping(value = "/blog")
+    public ResponseEntity createBlog(@ModelAttribute("request")BlogCreateRequest request) {
+
+        return ResponseEntity.ok(createBlog(request));
     }
 }

@@ -1,11 +1,13 @@
 package kr.co.fortice.blog.service;
 
+import kr.co.fortice.blog.dto.BloggerInfoDTO;
 import kr.co.fortice.blog.dto.request.SignInRequest;
 import kr.co.fortice.blog.dto.request.SignUpRequest;
 import kr.co.fortice.blog.entity.Blogger;
 import kr.co.fortice.blog.exception.custom.AlreadySignedUpEmailException;
 import kr.co.fortice.blog.repository.BloggerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -15,7 +17,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class AuthService {
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final PasswordEncoder passwordEncoder;
     private final BloggerRepository bloggerRepository;
 
@@ -28,14 +29,10 @@ public class AuthService {
         return "index";
     }
 
-    public String signin(SignInRequest request){
-        // email, password 인증 토큰 생성
-        UsernamePasswordAuthenticationToken authenticationToken = request.toAuthenticationToken();
-        // 검증
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
-        System.out.println(authentication.toString());
-
-        return "";
+    public BloggerInfoDTO getBloggerInfo(Integer bloggerId) throws Exception{
+        return BloggerInfoDTO.of(
+                bloggerRepository.findBloggerById(bloggerId)
+                        .orElseThrow(ChangeSetPersister.NotFoundException::new)
+        );
     }
 }

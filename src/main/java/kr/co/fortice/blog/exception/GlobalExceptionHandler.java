@@ -1,4 +1,4 @@
-package kr.co.fortice.blog.exception.custom;
+package kr.co.fortice.blog.exception;
 
 import kr.co.fortice.blog.dto.response.ExceptionResponse;
 import org.springframework.core.Ordered;

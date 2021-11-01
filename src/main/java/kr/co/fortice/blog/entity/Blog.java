@@ -31,17 +31,17 @@ public class Blog {
     private String subtitle;
 
     @Column(name = "trackback_agree")
-    private Byte trackbackAgree;
+    private Boolean trackbackAgree;
 
     public void changeTitle(String title) {
         this.title = title;
     }
 
     public void agreeTrackback() {
-        this.trackbackAgree = 0;
+        this.trackbackAgree = true;
     }
 
     public void disagreeTrackback() {
-        this.trackbackAgree = 1;
+        this.trackbackAgree = false;
     }
 }

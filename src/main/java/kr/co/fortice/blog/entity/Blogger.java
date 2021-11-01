@@ -21,22 +21,22 @@ public class Blogger {
     private Integer id;
 
     @NotBlank
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
     @NotBlank
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "authority")
     private Authority authority;
 
-    @OneToMany(mappedBy = "blogger", cascade = CascadeType.REMOVE)
-    List<Blog> blogs = new ArrayList<>();
+    @OneToOne(mappedBy = "blogger", cascade = CascadeType.REMOVE)
+    private Blog blog;
 
     public enum Authority {
         ROLE_BLOGGER, ROLE_ADMIN

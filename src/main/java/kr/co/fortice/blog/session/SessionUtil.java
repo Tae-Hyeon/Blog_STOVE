@@ -11,7 +11,7 @@ public class SessionUtil {
     public static Integer getSessionBloggerId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (!authentication.isAuthenticated()) {
+        if (!authentication.isAuthenticated() || authentication.getName().equals("anonymousUser")) {
             return -1;
 //            throw new UnauthenticatedException("인증이 되지 않은 블로거입니다.");
         }

@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,19 +21,22 @@ public class Blog {
     private Integer id;
 
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "blogger_id")
+    @OneToOne
+    @JoinColumn(name = "blogger_id", unique = true)
     private Blogger blogger;
 
     @NotBlank
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "subtitle")
-    private String subtitle;
+    @Column(name = "introduce")
+    private String introduce;
 
     @Column(name = "trackback_agree")
     private Boolean trackbackAgree;
+
+    @OneToMany(mappedBy = "blog", fetch = FetchType.LAZY)
+    List<Post> posts = new ArrayList<Post>();
 
     public void changeTitle(String title) {
         this.title = title;

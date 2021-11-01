@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface BloggerRepository extends JpaRepository<Blogger, Integer> {
-    Optional<Blogger> findBloggerByEmail(String email);
-
     Optional<Blogger> findBloggerById(Integer id);
+    Optional<Blogger> findBloggerByEmail(String email);
+    Optional<Blogger> findBloggerByName(String name);
 }

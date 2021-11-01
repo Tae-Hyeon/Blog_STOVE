@@ -10,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 public class BloggerInfoDTO {
     private Integer id;
-
     private String email;
-
     private String name;
 
     public static BloggerInfoDTO of(Blogger blogger) {

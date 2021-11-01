@@ -5,23 +5,23 @@ import kr.co.fortice.blog.entity.Blogger;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
-@Getter
-@RequiredArgsConstructor
+@Data
 public class BlogCreateRequest {
     @NotBlank
     String title;
 
     @NotBlank
-    String subtitle;
+    String introduce;
 
     public Blog toEntity(Blogger blogger) {
         return Blog.builder()
                 .blogger(blogger)
                 .title(this.title)
-                .subtitle(this.subtitle)
+                .introduce(this.introduce)
                 .trackbackAgree(true)
                 .build();
     }

@@ -7,8 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 import javax.validation.constraints.NotBlank;
 
-@Getter
-@RequiredArgsConstructor
+@Data
 public class SignInRequest {
     @NotBlank
     String email;

@@ -5,6 +5,7 @@ import kr.co.fortice.blog.dto.request.SignInRequest;
 import kr.co.fortice.blog.dto.request.SignUpRequest;
 import kr.co.fortice.blog.entity.Blogger;
 import kr.co.fortice.blog.exception.custom.AlreadySignedUpEmailException;
+import kr.co.fortice.blog.exception.custom.DataNotFoundException;
 import kr.co.fortice.blog.repository.BloggerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -32,7 +33,7 @@ public class AuthService {
     public BloggerInfoDTO getBloggerInfo(Integer bloggerId) throws Exception{
         return BloggerInfoDTO.of(
                 bloggerRepository.findBloggerById(bloggerId)
-                        .orElseThrow(ChangeSetPersister.NotFoundException::new)
+                        .orElseThrow(DataNotFoundException::new)
         );
     }
 }

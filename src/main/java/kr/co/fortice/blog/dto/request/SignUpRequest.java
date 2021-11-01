@@ -8,8 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.NotBlank;
 
-@Getter
-@RequiredArgsConstructor
+@Data
 public class SignUpRequest {
     @NotBlank
     String email;

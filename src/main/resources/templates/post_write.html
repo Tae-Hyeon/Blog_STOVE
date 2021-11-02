@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    <body>
+        <script type="text/javascript" th:src="@{/js/post_ajax.js}"></script>
+        <script type="text/javascript" th:src="@{/js/post_write.js}"></script>
+        <script type="text/javascript" src="static/js/post_ajax.js"></script>
+        <script type="text/javascript" src="static/js/post_write.js"></script>
+        <script type="text/javascript" src="js/post_ajax.js"></script>
+        <script type="text/javascript" src="js/post_write.js"></script>
+        <form th:action="@{/write}" th:object="${postForm}" method="POST">
+            <div>
+                <label>카테고리 선택   </label>
+                <select th:field="*{category}">
+                    <option value="-1" selected>선택 안함</option>
+                    <option th:each="category: ${categories.getCategory()}"
+                            th:value="${category.getKey()}"
+                            th:utext="${category.getValue()}"></option>
+                </select>
+            </div>
+            <br>
+            <label>글 제목 :  </label>
+            <input type="text" th:field="*{title}"> <br>
+            <label>내용</label>
+            <br><br>
+
+            <label>파일 첨부</label>
+            <input type="file" onchange="uploadImage()">
+            <br><br>
+
+            <div id="contents-filed">
+                <textarea id="user-see"></textarea>
+            </div>
+            <div>
+                <textarea th:type="hidden" th:field="*{contents}"></textarea>
+            </div>
+            <button type="button" onclick="parseContent()">테스트 버튼</button>
+            <input type="button" onclick="parseContent()" value="글 작성">
+        </form>
+    </body>
+</html>

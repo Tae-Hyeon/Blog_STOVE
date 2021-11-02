@@ -2,13 +2,11 @@ package kr.co.fortice.blog.service;
 
 import kr.co.fortice.blog.entity.Blogger;
 import kr.co.fortice.blog.repository.BloggerRepository;
-import kr.co.fortice.blog.session.CustomUserDetails;
-import kr.co.fortice.blog.session.SessionBlogVo;
+import kr.co.fortice.blog.global.session.CustomUserDetails;
+import kr.co.fortice.blog.global.session.SessionBlogVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

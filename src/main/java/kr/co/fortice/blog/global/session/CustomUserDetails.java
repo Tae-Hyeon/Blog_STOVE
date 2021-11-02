@@ -1,4 +1,4 @@
-package kr.co.fortice.blog.session;
+package kr.co.fortice.blog.global.session;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,10 +1,8 @@
-package kr.co.fortice.blog.session;
+package kr.co.fortice.blog.global.session;
 
-import kr.co.fortice.blog.dto.BlogInfoDTO;
 import kr.co.fortice.blog.entity.Blog;
 import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Builder
 @Data

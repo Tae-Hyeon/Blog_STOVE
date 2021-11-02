@@ -1,4 +1,4 @@
-package kr.co.fortice.blog.exception.custom;
+package kr.co.fortice.blog.global.exception.custom;
 
 import lombok.Getter;
 

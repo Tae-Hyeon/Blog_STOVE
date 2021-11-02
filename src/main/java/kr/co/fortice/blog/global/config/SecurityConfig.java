@@ -1,9 +1,9 @@
-package kr.co.fortice.blog.config;
+package kr.co.fortice.blog.global.config;
 
 import kr.co.fortice.blog.service.CustomUserDetailsService;
-import kr.co.fortice.blog.session.SessionAuthenticationFilter;
-import kr.co.fortice.blog.session.SessionProvider;
-import kr.co.fortice.blog.session.SignInSuccessHandler;
+import kr.co.fortice.blog.global.session.SessionAuthenticationFilter;
+import kr.co.fortice.blog.global.session.SessionProvider;
+import kr.co.fortice.blog.global.session.SignInSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

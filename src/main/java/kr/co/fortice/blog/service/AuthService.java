@@ -15,12 +15,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @RequiredArgsConstructor
 @Service
 public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final BloggerRepository bloggerRepository;
 
+    @Transactional
     public String signup(SignUpRequest request){
         if(bloggerRepository.findBloggerByEmail(request.getEmail()).isPresent())
             throw new AlreadySignedUpEmailException("이미 등록된 사용자 입니다.");

@@ -25,7 +25,8 @@ public class SessionProvider implements AuthenticationProvider {
         //System.out.println(authenticationToken.toString());
         String email = authenticationToken.getName();
         String password = (String) authenticationToken.getCredentials();
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+        // UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+        CustomUserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
 
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException(email + "Invalid password");

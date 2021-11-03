@@ -24,7 +24,7 @@ public class BlogController {
         return "redirect:/" + blogService.createBlog(request);
     }
 
-    @GetMapping(value = "/{bloggerName}")
+    @GetMapping(value = "/@{bloggerName}")
     public String getBlogMain(@PathVariable("bloggerName") String bloggerName, Model model) throws Exception {
         //TODO: 본인 소유의 블로그인지 확인해야함
         BlogMainResponse mainResponse = blogService.getBlogMain(bloggerName);

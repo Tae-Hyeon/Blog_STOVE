@@ -55,7 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring()
                 .antMatchers(
-                        "/templates/**"
+                        "/templates/**", "/static/**", "/js/**",
+                        "/favicon.ico"
                 );
     }
 
@@ -66,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 인증이 필요한 경우인지 ant형식으로 url 지정
                 .authorizeRequests()
                         .antMatchers("/").permitAll()
+                        .antMatchers("/@**").permitAll()
                         .antMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
 

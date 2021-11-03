@@ -31,7 +31,7 @@ public class PostController {
         return "post"; //PageList.POST_READ_PAGE.resource();
     }
 
-    @GetMapping("/{bloggerName}/{postId}")
+    @GetMapping("/@{bloggerName}/{postId}")
     public String getPost(@PathVariable("postId") Integer postId, Model model) {
         model.addAttribute("post", postService.getPost(postId));
         return PageList.POST_READ_PAGE.resource();

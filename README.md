@@ -5,15 +5,15 @@ STOVE Dev Camp 서버 전형 과제
 ### 기능 정리
 - 블로그 기본
   - 블로그 생성(/blog POST)
-  - 블로그 메인 화면 (/{bloggerName} GET)
-- 블로그 포스팅 (/{bloggerName})
+  - 블로그 메인 화면 (/@{bloggerName} GET)
+- 블로그 포스팅 (/@{bloggerName})
   - 글 작성 (/ POST)
   - 글 조회 (/{postId} GET)
   - 글 수정 (/{postId} PUT)
   - 글 삭제 (/{postId} DELETE)
   - 트랙백 (/trackback POST)
     - 특정 게시글에 나의 게시글을 엮인 글로 등록하는 것
-- 블로그 글 목록(/{bloggerName}/category)
+- 블로그 글 목록(/@{bloggerName}/category)
   - 목록 생성 (/ POST)
   - 목록에 글 등록 (/{category} POST)
   - 목록 삭제 (/{category} DELETE)
@@ -22,7 +22,7 @@ STOVE Dev Camp 서버 전형 과제
   - 다른 블로그 팔로우(새 글 목록) (필수 X)
   - 최근 등록 댓글 (필수 X)
   - 글 태그로 보기 (필수 X)
-- 댓글 ({bloggerName}/{postId}/comment)
+- 댓글 (@{bloggerName}/{postId}/comment)
   - 댓글 작성 (/ POST)
   - 댓글 수정 (/{commentId} PATCH)
   - 댓글 삭제 (/{commentId} DELETE)

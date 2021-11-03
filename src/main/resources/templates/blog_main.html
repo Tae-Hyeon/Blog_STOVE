@@ -13,11 +13,11 @@
     <div>
         <a th:href="@{/write}">글 쓰러 가기</a>
     </div>
-    <div>
+    <div th:if="${postInfo}">
         <div th:each="post : ${postInfo}">
-            <img th:src="${post.getImage()}" alt="">
-            <a th:href="'@'+${bloggerInfo.getName()} + '/' + ${post.getId()}" th:text="${post.getTitle()}"></a>
-            <p th:text="${post.getSummary()}"></p>
+            <a th:href="'@'+${bloggerInfo.getName()} + '/' + ${post.getId()}" th:text="${post.getTitle()}"></a><br>
+            <img th:src="${post.getImage()}" alt=""><br>
+            <p th:text="${post.getSummary()}"></p><br>
         </div>
     </div>
 </body>

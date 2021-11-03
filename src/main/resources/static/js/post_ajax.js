@@ -8,7 +8,7 @@ let getCategories = () => {
     });
 }
 
-function uploadImage(){
+let uploadImage = () => {
     let fileField = document.getElementById("file");
     if(fileField.files.length === 0)
         return ;
@@ -19,12 +19,17 @@ function uploadImage(){
     $.ajax({
         url: '/file',
         processData: false,
-        contentType: "Multipart",
+        contentType: false,
         data: formData,
+        dataType: 'json',
         type: 'POST',
-        success: (result) => {
-            console.log(result);
-            document.getElementById("user-see").append("![](" + result + ')\n');
+        complete: (result) => {
+            console.log(result.responseText)
+            if(result === "" || result === undefined) {
+                alert("이미지 넣기 실패")
+                return;
+            }
+            $('#user-see')[0].value += "\n![](" + result.responseText + ')'
         }
     });
 }

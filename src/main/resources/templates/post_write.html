@@ -4,10 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
     <body>
-        <script type="text/javascript" th:src="@{js/post_ajax.js}"></script>
-        <script type="text/javascript" th:src="@{js/post_write.js}"></script>
+        <script type="text/javascript" th:src="@{/js/post_ajax.js}"></script>
+        <script type="text/javascript" th:src="@{/js/post.js}"></script>
         <form th:action="@{/write}" th:object="${postForm}" method="POST">
             <div>
                 <label>카테고리 선택   </label>
@@ -29,13 +32,13 @@
             <br><br>
 
             <div id="contents-filed">
-                <textarea id="user-see"></textarea>
+                <textarea id="user-see" rows="10" cols="30"></textarea>
             </div>
             <div>
-                <textarea th:type="hidden" th:field="*{contents}"></textarea>
+                <textarea style="visibility: hidden" th:field="*{contents}"></textarea>
             </div>
             <button type="button" onclick="parseContent()">테스트 버튼</button>
-            <input type="button" onclick="parseContent()" value="글 작성">
+            <input type="button" onclick="submit()" value="글 작성">
         </form>
     </body>
 </html>

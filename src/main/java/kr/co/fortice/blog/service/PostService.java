@@ -36,6 +36,7 @@ public class PostService {
         postRepository.save(post);
         return PostInfoDTO.of(post);
     }
+    
     public PostInfoDTO getPost(Integer postId) {
         return PostInfoDTO.of(
                 postRepository.findPostById(postId)

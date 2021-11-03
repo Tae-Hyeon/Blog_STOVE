@@ -28,7 +28,7 @@ public class BlogController {
     public String getBlogMain(@PathVariable("bloggerName") String bloggerName, Model model) throws Exception {
         //TODO: 본인 소유의 블로그인지 확인해야함
         BlogMainResponse mainResponse = blogService.getBlogMain(bloggerName);
-        if(bloggerName.equals(SessionUtil.getBloggerName())) {
+        if(SessionUtil.isAuthenticated() && bloggerName.equals(SessionUtil.getBloggerName())) {
             if(mainResponse.getBlog().getId() == null)
                 return "redirect:/blog";
             model.addAttribute("my", true);

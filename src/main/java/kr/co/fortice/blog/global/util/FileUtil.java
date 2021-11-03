@@ -27,11 +27,10 @@ public class FileUtil {
         checkFileType(file);
 
         String filename = file.getOriginalFilename().replaceAll(" ", "");
-        filename = new Date().toString() + "-" + URLEncoder.encode(filename, StandardCharsets.UTF_8);
+        filename = Long.toString(new Date().getTime()) + "-" + Integer.toString((int)(Math.random() * 100));//URLEncoder.encode(filename, StandardCharsets.UTF_8);
         File dest = new File(GlobalVO.getImagePath() + filename);
         file.transferTo(dest);
-        System.out.println(filename);
-        return filename;
+        return GlobalVO.getImageServerURL() + filename;
     }
 
     public static void deleteFile(String path) {

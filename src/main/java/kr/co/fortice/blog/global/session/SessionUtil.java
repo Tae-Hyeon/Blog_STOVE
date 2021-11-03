@@ -9,6 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @NoArgsConstructor
 public class SessionUtil {
 
+    public static boolean isAuthenticated() {
+        return SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+    }
+
     public static Integer getSessionBloggerId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -26,8 +30,12 @@ public class SessionUtil {
 
     public static String getBloggerName() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if(!authentication.isAuthenticated() || authentication.getName().equals("anonymousUser"))
+            return "";
+
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        return userDetails.getUsername();
+        return userDetails.getNickname();
     }
 
     public static Integer getBlogId() {

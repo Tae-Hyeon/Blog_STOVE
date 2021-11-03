@@ -36,6 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 SessionBlogVo.of(blogger.getBlog()),
                 String.valueOf(blogger.getId()),
                 blogger.getEmail(),
+                blogger.getName(),
                 blogger.getPassword(),
                 Collections.singleton(grantedAuthority)
         );

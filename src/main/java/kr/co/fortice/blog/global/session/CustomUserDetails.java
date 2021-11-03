@@ -13,16 +13,18 @@ public class CustomUserDetails implements UserDetails {
     private SessionBlogVo blog;
     private String username;
     private String email;
+    private String nickname;
     private String password;
     private Boolean enabled;
     private Boolean accountNonExpired;
     private Boolean accountNonLocked;
     private boolean credentialsNonExpired;
 
-    public CustomUserDetails(SessionBlogVo blog, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public CustomUserDetails(SessionBlogVo blog, String username, String email, String nickname, String password, Collection<? extends GrantedAuthority> authorities) {
         this.blog = blog;
         this.username = username;
         this.email = email;
+        this.nickname = nickname;
         this.password = password;
         this.enabled = true;
         this.accountNonExpired = true;

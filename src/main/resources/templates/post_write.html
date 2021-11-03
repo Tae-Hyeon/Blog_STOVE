@@ -6,12 +6,8 @@
     <title>Title</title>
 </head>
     <body>
-        <script type="text/javascript" th:src="@{/js/post_ajax.js}"></script>
-        <script type="text/javascript" th:src="@{/js/post_write.js}"></script>
-        <script type="text/javascript" src="static/js/post_ajax.js"></script>
-        <script type="text/javascript" src="static/js/post_write.js"></script>
-        <script type="text/javascript" src="js/post_ajax.js"></script>
-        <script type="text/javascript" src="js/post_write.js"></script>
+        <script type="text/javascript" th:src="@{js/post_ajax.js}"></script>
+        <script type="text/javascript" th:src="@{js/post_write.js}"></script>
         <form th:action="@{/write}" th:object="${postForm}" method="POST">
             <div>
                 <label>카테고리 선택   </label>
@@ -29,7 +25,7 @@
             <br><br>
 
             <label>파일 첨부</label>
-            <input type="file" onchange="uploadImage()">
+            <input type="file" id="file" onchange="uploadImage()">
             <br><br>
 
             <div id="contents-filed">

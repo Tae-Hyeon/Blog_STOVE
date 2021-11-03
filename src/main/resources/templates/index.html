@@ -6,8 +6,10 @@
     <title>Title</title>
 </head>
 <body>
+    <script type="text/javascript" th:src="@{js/post_ajax.js}"></script>
+    <script type="text/javascript" th:src="@{js/post_write.js}"></script>
     <div th:if="${isAuthenticated}">
-        <a th:href="@{${blogger.name}}">내 블로그로 가기</a>
+        <a th:href="@{'@'+${blogger.name}}">내 블로그로 가기</a>
     </div>
     <div th:unless="${isAuthenticated}">
         <h1>나만의 블로그에 기록해요</h1>

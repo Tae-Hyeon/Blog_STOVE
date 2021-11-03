@@ -16,7 +16,7 @@
     <div>
         <div th:each="post : ${postInfo}">
             <img th:src="${post.getImage()}" alt="">
-            <a th:href="${bloggerInfo.getName()} + '/' + ${post.getId()}" th:text="${post.getTitle()}"></a>
+            <a th:href="'@'+${bloggerInfo.getName()} + '/' + ${post.getId()}" th:text="${post.getTitle()}"></a>
             <p th:text="${post.getSummary()}"></p>
         </div>
     </div>

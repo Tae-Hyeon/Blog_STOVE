@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
+<!--    <img th:src="@{image/my.png}"></img>-->
     <div th:if="${isAuthenticated}">
-        <a th:href="@{${blogger.name}}">내 블로그로 가기</a>
+        <a th:href="@{'@'+${blogger.name}}">내 블로그로 가기</a>
     </div>
     <div th:unless="${isAuthenticated}">
         <h1>나만의 블로그에 기록해요</h1>

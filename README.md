@@ -5,24 +5,24 @@ STOVE Dev Camp 서버 전형 과제
 ### 기능 정리
 - 블로그 기본
   - 블로그 생성(/blog POST)
-  - 블로그 메인 화면 (/{bloggerName} GET)
-- 블로그 포스팅 (/{bloggerName})
-  - 글 조회 (/ GET)
+  - 블로그 메인 화면 (/@{bloggerName} GET)
+- 블로그 포스팅 (/@{bloggerName})
   - 글 작성 (/ POST)
+  - 글 조회 (/{postId} GET)
   - 글 수정 (/{postId} PUT)
   - 글 삭제 (/{postId} DELETE)
   - 트랙백 (/trackback POST)
     - 특정 게시글에 나의 게시글을 엮인 글로 등록하는 것
-- 블로그 글 목록(/{bloggerName}/list)
+- 블로그 글 목록(/@{bloggerName}/category)
   - 목록 생성 (/ POST)
-  - 목록에 글 등록 (/{listName} POST)
-  - 목록 삭제 (/{listName} DELETE)
-  - 글 목록으로 보기 (/{listName} GET)
+  - 목록에 글 등록 (/{category} POST)
+  - 목록 삭제 (/{category} DELETE)
+  - 글 목록으로 보기 (/{category} GET)
 - 블로그 기타
   - 다른 블로그 팔로우(새 글 목록) (필수 X)
   - 최근 등록 댓글 (필수 X)
   - 글 태그로 보기 (필수 X)
-- 댓글 ({bloggerName}/{postId}/comment)
+- 댓글 (@{bloggerName}/{postId}/comment)
   - 댓글 작성 (/ POST)
   - 댓글 수정 (/{commentId} PATCH)
   - 댓글 삭제 (/{commentId} DELETE)
@@ -54,11 +54,11 @@ STOVE Dev Camp 서버 전형 과제
   |id|INTEGER|`PK` `AUTO_INCREMENT`||인덱스|
   |blogger_id|INTEGER|`FK blogger.id` `UNIQUE` `NOT NULL`||외부 키|
   |title|STRING(40)|`NOT NULL`||블로그 이름|
-  |subtitle|STRING(100)||BLANK('')|블로그 소개|
+  |introduce|STRING(100)||BLANK('')|블로그 소개|
   |trackback|BIT|`NOT NULL`|1|1: 동의<br>0: 거부|
 
 
-- 글 목록 (list)
+- 글 목록 (category)
   - blog 1:N ON DELETE CASCADE ON UPDATE CASCADE
 
   |컬럼 명|타입|제약조건|디폴트 값|설명|
@@ -72,13 +72,13 @@ STOVE Dev Camp 서버 전형 과제
 
 - 게시글 (post)
   - blog 1:N ON DELETE CASCADE ON UPDATE CASCADE
-  - list 1:N ON DELETE CASCADE ON UPDATE CASCADE
+  - category 1:N ON DELETE CASCADE ON UPDATE CASCADE
 
   |컬럼 명|타입|제약조건|디폴트 값|설명|
   |--|--|--|--|--|
   |id|INTEGER|`PK` `AUTO_INCREMENT`||인덱스|
   |blog_id|INTEGER|`FK blog.id` `NOT NULL`||블로그 외부 키|
-  |list_id|INTEGER|`FK list.id` `NOT NULL`||글 목록 외부 키|
+  |category|INTEGER|`FK category.id` `NOT NULL`||글 목록 외부 키|
   |title|STRING(40)|`NOT NULL`||글 제목|
   |contents|TEXT||BLANK('')|글 내용|
   |views|INTEGER||0|조회수|

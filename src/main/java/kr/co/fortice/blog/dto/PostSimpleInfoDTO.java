@@ -1,19 +1,22 @@
 package kr.co.fortice.blog.dto;
 
 import kr.co.fortice.blog.entity.Post;
-import kr.co.fortice.blog.util.StringUtil;
+import kr.co.fortice.blog.global.common.GlobalVO;
+import kr.co.fortice.blog.global.util.StringUtil;
 import lombok.Builder;
 import lombok.Data;
 
 @Builder
 @Data
 public class PostSimpleInfoDTO {
-    String title;
-    String summary;
-    String image;
+    private Integer id;
+    private String title;
+    private String summary;
+    private String image;
 
     public static PostSimpleInfoDTO of(Post post) {
         return PostSimpleInfoDTO.builder()
+                .id(post.getId())
                 .title(post.getTitle())
                 .summary(StringUtil.parseSummary(post.getContents()))
                 .image(StringUtil.getFirstImage(post.getContents()))

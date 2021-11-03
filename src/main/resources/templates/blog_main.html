@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:if="${blogInfo}">
+        <p th:text="${blogInfo}"></p>
+        <a th:href="${blogInfo}"></a>
+    </div>
+    <div>
+        <a th:href="@{/write}">글 쓰러 가기</a>
+    </div>
+    <div th:if="${postInfo}">
+        <div th:each="post : ${postInfo}">
+            <a th:href="'@'+${bloggerInfo.getName()} + '/' + ${post.getId()}" th:text="${post.getTitle()}"></a><br>
+            <img th:src="${post.getImage()}" alt=""><br>
+            <p th:text="${post.getSummary()}"></p><br>
+        </div>
+    </div>
+</body>
+</html>

@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Table(name = "post")
 public class Post {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -30,6 +31,8 @@ public class Post {
 
     @Column(name = "contents")
     private String contents;
+
+    //TODO: 비밀글 관련 설정 추가
 
     @Column(name = "created_at")
     @CreationTimestamp

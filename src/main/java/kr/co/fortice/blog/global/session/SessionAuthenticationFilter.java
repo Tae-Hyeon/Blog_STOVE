@@ -1,4 +1,4 @@
-package kr.co.fortice.blog.session;
+package kr.co.fortice.blog.global.session;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

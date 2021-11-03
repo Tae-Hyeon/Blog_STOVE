@@ -1,6 +1,5 @@
-package kr.co.fortice.blog.session;
+package kr.co.fortice.blog.global.session;
 
-import kr.co.fortice.blog.entity.Blogger;
 import kr.co.fortice.blog.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -8,8 +7,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
@@ -25,7 +22,8 @@ public class SessionProvider implements AuthenticationProvider {
         //System.out.println(authenticationToken.toString());
         String email = authenticationToken.getName();
         String password = (String) authenticationToken.getCredentials();
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+        // UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+        CustomUserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
 
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException(email + "Invalid password");

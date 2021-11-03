@@ -2,26 +2,21 @@ package kr.co.fortice.blog.controller;
 
 import kr.co.fortice.blog.dto.request.BlogCreateRequest;
 import kr.co.fortice.blog.dto.response.BlogMainResponse;
-import kr.co.fortice.blog.entity.Blogger;
 import kr.co.fortice.blog.service.BlogService;
+import kr.co.fortice.blog.global.session.SessionUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 
 @RequiredArgsConstructor
 @Controller
 public class BlogController {
     private final BlogService blogService;
 
-
     @GetMapping(value = "/blog")
     public String getBlogCreatePage() {
-        return "blog_create";
+        return PageList.BLOG_CREATE_PAGE.resource();
     }
 
     @PostMapping(value = "/blog")
@@ -29,15 +24,20 @@ public class BlogController {
         return "redirect:/" + blogService.createBlog(request);
     }
 
-    @GetMapping(value = "/{bloggerName}")
-    public String getBlogMain(@PathVariable("bloggerName") String bloggerName, Model model) throws Exception{
-        Blogger blogger = blogService.hasBlog(bloggerName);
-        System.out.println(blogger.getBlog() == null);
-        if(blogger.getBlog() == null)
-            return "blog_create";
-
+    @GetMapping(value = "/@{bloggerName}")
+    public String getBlogMain(@PathVariable("bloggerName") String bloggerName, Model model) throws Exception {
+        //TODO: 본인 소유의 블로그인지 확인해야함
         BlogMainResponse mainResponse = blogService.getBlogMain(bloggerName);
-        model.addAttribute("blogInfo", mainResponse);
-        return "blog_main";
+        if(SessionUtil.isAuthenticated() && bloggerName.equals(SessionUtil.getBloggerName())) {
+            if(mainResponse.getBlog().getId() == null)
+                return "redirect:/blog";
+            model.addAttribute("my", true);
+        }
+        else
+            model.addAttribute("my", false);
+        model.addAttribute("bloggerInfo", mainResponse.getBlogger());
+        model.addAttribute("blogInfo", mainResponse.getBlog());
+        model.addAttribute("postInfo", mainResponse.getPosts());
+        return "blog_main"; //PageList.BLOG_MAIN_PAGE.resource();
     }
 }

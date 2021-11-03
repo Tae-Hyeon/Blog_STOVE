@@ -1,9 +1,9 @@
-package kr.co.fortice.blog.config;
+package kr.co.fortice.blog.global.config;
 
 import kr.co.fortice.blog.service.CustomUserDetailsService;
-import kr.co.fortice.blog.session.SessionAuthenticationFilter;
-import kr.co.fortice.blog.session.SessionProvider;
-import kr.co.fortice.blog.session.SignInSuccessHandler;
+import kr.co.fortice.blog.global.session.SessionAuthenticationFilter;
+import kr.co.fortice.blog.global.session.SessionProvider;
+import kr.co.fortice.blog.global.session.SignInSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,7 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring()
                 .antMatchers(
-                        "/templates/**"
+                        "/templates/**", "/static/**", "/js/**",
+                        "/image/**", "/favicon.ico"
                 );
     }
 
@@ -66,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 인증이 필요한 경우인지 ant형식으로 url 지정
                 .authorizeRequests()
                         .antMatchers("/").permitAll()
+                        .antMatchers("/@**").permitAll()
                         .antMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
 

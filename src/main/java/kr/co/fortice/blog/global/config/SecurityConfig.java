@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers(
                         "/templates/**", "/static/**", "/js/**",
-                        "/image/**", "/favicon.ico"
+                        "/image/**", "/favicon.ico", "/layout/**"
                 );
     }
 

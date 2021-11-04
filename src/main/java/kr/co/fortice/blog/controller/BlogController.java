@@ -35,9 +35,9 @@ public class BlogController {
         }
         else
             model.addAttribute("my", false);
-        model.addAttribute("bloggerInfo", mainResponse.getBlogger());
-        model.addAttribute("blogInfo", mainResponse.getBlog());
-        model.addAttribute("postInfo", mainResponse.getPosts());
+        model.addAttribute("blogger", mainResponse.getBlogger());
+        model.addAttribute("blog", mainResponse.getBlog());
+        model.addAttribute("posts", mainResponse.getPosts());
         return "blog_main"; //PageList.BLOG_MAIN_PAGE.resource();
     }
 }

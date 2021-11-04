@@ -1,31 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-  <body>
-    <script type="text/javascript" th:src="@{/js/post.js}"></script>
-    <div>
-      <div id="post-wrapper" th:if="${post}">
-        <div id="title-wrapper">
-          <h1 th:text="${post.getTitle()}"></h1>
-        </div>
-        <div id="contents-wrapper">
-          <div style="visibility: hidden" id="hidden-contents" th:text="${post.getContents()}">
-          </div>
-          <div th:content="${post.getContents()}">
-          </div>
-        </div>
-      </div>
-      <div th:unless="${post}">
-        <a th:href="@{/}" th:text="메인으로가기">to main</a>
-      </div>
-    </div>
-    <script> window.onload = setContents() </script>
-  </body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="fragments/config :: configFragment">
+    </head>
+
+    <body>
+
+        <th:block th:replace="fragments/header :: headerFragment"></th:block>
+        <th:block th:replace="fragments/post :: postFragment(${post})" ></th:block>
+        <th:block th:replace="fragments/comments :: commentsFragment(${comments})"></th:block>
+    </body>
 </html>

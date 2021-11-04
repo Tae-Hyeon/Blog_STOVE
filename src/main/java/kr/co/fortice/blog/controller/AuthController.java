@@ -27,7 +27,7 @@ public class AuthController {
 
     @PostMapping("/signin")
     public String signin(HashMap<String, Object> model) throws Exception{
-        Integer bloggerId = SessionUtil.getSessionBloggerId();
+        Integer bloggerId = SessionUtil.getBloggerId();
 
         model.put("isAuthenticated", true);
         model.put("blogger", authService.getBloggerInfo(bloggerId));

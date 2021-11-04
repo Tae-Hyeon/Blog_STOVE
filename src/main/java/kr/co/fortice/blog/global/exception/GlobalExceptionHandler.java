@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
-    protected ResponseEntity<ExceptionResponse> handleException(Exception e) {
+    protected String handleException(Exception e) {
         e.printStackTrace();
-        return ExceptionResponse.toResponseEntity(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                e.getMessage(),
-                "에러가 발생했습니다."
-        );
+        return "error";
+//        return ExceptionResponse.toResponseEntity(
+//                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+//                e.getMessage(),
+//                "에러가 발생했습니다."
+//        );
     }
 }

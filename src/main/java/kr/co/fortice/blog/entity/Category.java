@@ -29,10 +29,10 @@ public class Category {
     @Column(name = "count")
     private Integer count;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    List<Post> posts = new ArrayList<Post>();
-
     @Column(name = "created_at")
     @CreationTimestamp
     private java.sql.Timestamp createdAt;
+
+//    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+//    List<Post> posts = new ArrayList<Post>();
 }

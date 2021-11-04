@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+    <header th:fragment="headerFragment" style="text-align: center">
+        <a href="/"> Folog </a>
+    </header>
+    <div>
+        <p th:text="${session}"></p>
+        <a th:href="@{/write}">글 쓰러 가기</a>
+    </div>
+</html>

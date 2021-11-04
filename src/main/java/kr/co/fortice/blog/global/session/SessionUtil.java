@@ -2,6 +2,7 @@ package kr.co.fortice.blog.global.session;
 
 import kr.co.fortice.blog.dto.BlogInfoDTO;
 import kr.co.fortice.blog.entity.Blog;
+import kr.co.fortice.blog.entity.Blogger;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +14,7 @@ public class SessionUtil {
         return SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
     }
 
-    public static Integer getSessionBloggerId() {
+    public static Integer getBloggerId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (!authentication.isAuthenticated() || authentication.getName().equals("anonymousUser")) {
@@ -24,9 +25,14 @@ public class SessionUtil {
         return Integer.parseInt(authentication.getName());
     }
 
-    private Boolean isAuthenticationNull(Authentication authentication) {
-        return (authentication == null || authentication.getName() == null);
+    public static Blogger getBloggerEntity() {
+        return Blogger.builder()
+                .id(getBloggerId())
+                .build();
     }
+//    private Boolean isAuthenticationNull(Authentication authentication) {
+//        return (authentication == null || authentication.getName() == null);
+//    }
 
     public static String getBloggerName() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -52,7 +58,8 @@ public class SessionUtil {
 
     public static Blog getBlogEntity() {
         return Blog.builder()
-                .id(getSessionBloggerId())
+                .id(getBlogId())
                 .build();
     }
+
 }

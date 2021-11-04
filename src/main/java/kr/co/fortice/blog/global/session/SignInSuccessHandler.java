@@ -17,7 +17,7 @@ public class SignInSuccessHandler implements AuthenticationSuccessHandler {
             throws IOException, ServletException {
         // System.out.println("success handler");
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        System.out.println(SecurityContextHolder.getContext().toString());
+        request.getSession().setAttribute("id", authentication.getName());
         response.sendRedirect("/");
     }
 }

@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
     Optional<Category> findCategoryByBlogAndTitle(Blog blog, String title);
 
-    @Query("SELECT c.id, c.title FROM Category c " +
+    @Query("SELECT c FROM Category c " +
             "WHERE c.id = :blogId " +
             "ORDER BY c.createdAt")
     List<Category> findAllByBlogId(@Param("blogId") Integer blogId);

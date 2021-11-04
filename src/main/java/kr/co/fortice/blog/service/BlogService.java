@@ -34,7 +34,7 @@ public class BlogService {
 
     @Transactional
     public Object createBlog(BlogCreateRequest request) {
-        Blogger blogger = bloggerRepository.findBloggerById(SessionUtil.getSessionBloggerId())
+        Blogger blogger = bloggerRepository.findBloggerById(SessionUtil.getBloggerId())
                 .orElseThrow(DataNotFoundException::new);
         System.out.println(request.getTitle() + request.getIntroduce());
         Blog blog = request.toEntity(blogger);

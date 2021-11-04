@@ -1,0 +1,34 @@
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+    <div style="text-align: center" th:fragment="commentsFragment(comments)">
+        <h1>
+            댓글 목록
+        </h1>
+        <script type="text/javascript" th:src="@{/js/comment.js}"></script>
+        <div id="comments-wrapper" th:if="${comments}">
+            <div th:each="comment : ${comments}" th:id="'comment-box' + ${comment.getId()}" style="border: 1px black solid">
+                <label>작성자: </label> <b><span th:text="${comment.getName()}"></span></b>
+                <button onclick="">답글</button>
+                <span th:if="${comment.getIsMine()}">
+                    <span th:id="'button-field' + ${comment.getId()}">
+                        <button th:onclick="'openUpdateField(' + ${comment.getId()} + ')'">수정</button>
+                        <button th:onclick="'deleteComment(' + ${comment.getId()} + ')'">삭제</button>
+                    </span>
+                    <span th:id="'update-field' + ${comment.getId()}" style="display: none">
+                        <button th:onclick="'updateComment(' + ${comment.getId()} + ')'">수정하기</button>
+                        <button th:onclick="'closeUpdateField(' + ${comment.getId()} + ')'">취소</button>
+                    </span>
+                </span><br>
+                <div>
+                    <label>댓글 내용 : </label>
+                    <p th:id="'comment-see' + ${comment.getId()}" th:text="${comment.getContents()}"></p>
+                    <input type="text" th:id="'comment' + ${comment.getId()}" style="display: none">
+                </div>
+            </div>
+        </div>
+        <div id="comment-writer">
+            <label> 댓글 : </label>
+            <input type="text" id="comment" name="comment">
+            <button onclick="send()">댓글 작성</button>
+        </div>
+    </div>
+</html>

@@ -1,18 +1,18 @@
 package kr.co.fortice.blog.dto.request;
 
-import kr.co.fortice.blog.entity.Blog;
 import kr.co.fortice.blog.entity.Category;
 import kr.co.fortice.blog.entity.Post;
 import kr.co.fortice.blog.global.session.SessionUtil;
 import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.sql.Timestamp;
+import javax.validation.constraints.NotNull;
 
 @Data
-public class PostCreateRequest {
+public class PostUpdateRequest {
+    @NotNull
+    private Integer id;
+
     private int category;
 
     @NotBlank

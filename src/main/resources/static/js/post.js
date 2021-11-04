@@ -36,10 +36,13 @@ let parseContent = () => {
     let contentsField = document.getElementById("contents")
     let contents = userSeeField.value
     contents = contents.replaceAll("\n", "<br>")
-    contentsField.innerText = contents
+    //contentsField.innerText = contents
+    contentsField.value = contents
+    console.log(contents)
+    console.log(contentsField)
 }
 
 let submit = async () => {
-    await parseContent()
+    await parseContent();
     await $('#post-form')[0].submit()
 }

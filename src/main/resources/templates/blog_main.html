@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <div th:if="${blogInfo}">
-        <p th:text="${blogInfo}"></p>
-        <a th:href="${blogInfo}"></a>
-    </div>
-    <div>
-        <a th:href="@{/write}">글 쓰러 가기</a>
-    </div>
-    <div th:if="${postInfo}">
-        <div th:each="post : ${postInfo}">
-            <a th:href="'@'+${bloggerInfo.getName()} + '/' + ${post.getId()}" th:text="${post.getTitle()}"></a><br>
-            <img th:src="${post.getImage()}" alt=""><br>
-            <p th:text="${post.getSummary()}"></p><br>
+    <head th:replace="fragments/config :: configFragment">
+    </head>
+
+    <body>
+        <th:block th:replace="fragments/header :: headerFragment"></th:block>
+        <div style="text-align: right">
+            <a href="/write"> 글 쓰기 </a>
+            <a href="/auth/logout"> 로그아웃 </a>
         </div>
-    </div>
-</body>
+        <div th:if="${blog}" style="text-align: center">
+            <h1 th:text="${blogger.getName()} + '의 블로그'"></h1>
+            <h1 th:text="${blog.getTitle()}"></h1>
+            <h3 th:text="${blog.getIntroduce()}"></h3>
+        </div>
+
+        <th:block th:replace="fragments/post_list :: postListFragment(${posts})"></th:block>
+    </body>
 </html>

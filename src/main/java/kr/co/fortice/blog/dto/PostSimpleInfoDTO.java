@@ -11,6 +11,7 @@ import lombok.Data;
 public class PostSimpleInfoDTO {
     private Integer id;
     private String title;
+    private String bloggerName;
     private String summary;
     private String image;
 
@@ -18,6 +19,7 @@ public class PostSimpleInfoDTO {
         return PostSimpleInfoDTO.builder()
                 .id(post.getId())
                 .title(post.getTitle())
+                .bloggerName(post.getBlog().getBlogger().getName())
                 .summary(StringUtil.parseSummary(post.getContents()))
                 .image(StringUtil.getFirstImage(post.getContents()))
                 .build();

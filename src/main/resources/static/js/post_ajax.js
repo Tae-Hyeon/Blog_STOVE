@@ -8,6 +8,45 @@ let getCategories = () => {
     });
 }
 
+let deletePost = () => {
+    const url = $(location).attr('pathname')
+    $.ajax({
+        url: url,
+        processData: false,
+        contentType: false,
+        dataType: 'json',
+        type: 'DELETE',
+        complete: (result) => {
+            location.replace(url.substring(0, url.indexOf('/',1)))
+        }
+    });
+}
+
+let updatePost = async () => {
+    await parseContent()
+    //let formData = await new FormData(document.getElementById('update-form'));
+    let formData = new FormData();
+    formData.append("id", document.getElementById("id").value)
+    formData.append("category", document.getElementById("category").value)
+    formData.append("title", document.getElementById("title").value)
+    await formData.append("contents", document.getElementById("contents").innerText)
+
+    console.log(formData)
+
+    await $.ajax({
+        url: '/write',
+        processData: false,
+        contentType: "application/json; charset=utf-8",
+        data: formData,
+        dataType: 'string',
+        type: 'PUT',
+        complete: (result) => {
+            //window.history.back();
+            console.log(result)
+        }
+    });
+}
+
 let uploadImage = () => {
     let fileField = document.getElementById("file");
     if(fileField.files.length === 0)

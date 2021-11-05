@@ -1,0 +1,25 @@
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+    <div style="text-align: center" th:fragment="postFragment(post)">
+        <script type="text/javascript" th:src="@{/js/post.js}"></script>
+        <script type="text/javascript" th:src="@{/js/post_ajax.js}"></script>
+        <div id="post-wrapper" th:if="${post}">
+            <div id="title-wrapper">
+                <h1 th:text="${post.getTitle()}"></h1>
+            </div>
+            <div id="button-wrapper" th:if="${post.getIsMine()}">
+                <button th:onclick="|location.replace('/write?id=${post.getId()}')|">수정하기</button>
+                <button onclick="deletePost()">삭제하기</button>
+            </div>
+            <div id="contents-wrapper">
+                <div style="visibility: hidden" id="hidden-contents" th:text="${post.getContents()}">
+                </div>
+                <div th:content="${post.getContents()}">
+                </div>
+            </div>
+            <script> window.onload = setContents() </script>
+        </div>
+        <div th:unless="${post}">
+            <h2 th:text="글이 존재하지 않습니다."></h2>
+        </div>
+    </div>
+</html>

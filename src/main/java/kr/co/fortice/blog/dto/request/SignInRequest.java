@@ -10,10 +10,10 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class SignInRequest {
     @NotBlank
-    String email;
+    private String email;
 
     @NotBlank
-    String password;
+    private String password;
 
     public UsernamePasswordAuthenticationToken toAuthenticationToken() {
         return new UsernamePasswordAuthenticationToken(email, password);

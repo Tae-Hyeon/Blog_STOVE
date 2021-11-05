@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="fragments/config :: configFragment">
+    </head>
+
+    <body>
+
+        <th:block th:replace="fragments/header :: headerFragment"></th:block>
+        <th:block th:replace="fragments/post :: postFragment(${post})" ></th:block>
+        <th:block th:replace="fragments/comments :: commentsFragment(${comments})"></th:block>
+    </body>
+</html>

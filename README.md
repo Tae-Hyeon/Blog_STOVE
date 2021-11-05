@@ -2,37 +2,74 @@
 
 STOVE Dev Camp 서버 전형 과제
 
+# 사용 기술 및 환경
+- localhost:8080
+- Spring Boot 2.5.5
+- MySQL 8.0
+- 
+
+# 필요 설정
+- MySQL 8.0
+  - url: jdbc:mysql://localhost:3306/blog_stove?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+  - 계정: blog_developer
+  - 비밀번호: qmffhrmroqkfwk2@
+- image path 설정
+  - application.properties  
+    - server.path.image=classpath:/static/images/
+    - image-server.url=/images/
+
+# 디렉토리 구조
+```
+src
+└─── main
+     ├─── kr.co.fortice.blog
+     │    ├── BlogStoveApplication.java
+     │    ├── controller
+     │    ├── dto
+     │    │      ├─── request
+     │    │      └─── response
+     │    ├── service
+     │    ├── repository
+     │    ├── entity
+     │    └── global
+     │             ├─── common
+     │             │         └─── GlobalVO.java
+     │             ├─── config
+     │             │         └─── SecurityConfig.java
+     │             ├─── session
+     │             ├─── exception
+     │             │         ├─── GlobalExceptionHandler.java
+     │             │         └─── custom
+     │             └─── util
+     └─── resource
+                 ├─── static   
+                 │    ├─── images
+                 │    └─── js
+                 ├─── templates
+                 │    └─── fragments
+                 └─── application.properties
+                 
+```
+
+
 ### 기능 정리
+
 - 블로그 기본
-  - 블로그 생성(/blog POST)
-  - 블로그 메인 화면 (/{bloggerName} GET)
-- 블로그 포스팅 (/{bloggerName})
-  - 글 조회 (/ GET)
-  - 글 작성 (/ POST)
-  - 글 수정 (/{postId} PUT)
+  - 블로그 생성(/blog POST) --> 블로그 메인 화면
+  - 블로그 메인 화면 (/@{bloggerName} GET)
+- 블로그 포스팅
+  - 글 작성 페이지 (/write GET)
+  - 글 작성 (/write POST) --> 글 조회
+  - 글 수정 페이지(/write?id= GET)
+  - 글 수정 (/@{bloggerName}/{postId} POST) --> 글 조회
+  - 글 조회 (/@{bloggerName}/{postId} GET)
   - 글 삭제 (/{postId} DELETE)
-  - 트랙백 (/trackback POST)
-    - 특정 게시글에 나의 게시글을 엮인 글로 등록하는 것
-- 블로그 글 목록(/{bloggerName}/list)
-  - 목록 생성 (/ POST)
-  - 목록에 글 등록 (/{listName} POST)
-  - 목록 삭제 (/{listName} DELETE)
-  - 글 목록으로 보기 (/{listName} GET)
-- 블로그 기타
-  - 다른 블로그 팔로우(새 글 목록) (필수 X)
-  - 최근 등록 댓글 (필수 X)
-  - 글 태그로 보기 (필수 X)
-- 댓글 ({bloggerName}/{postId}/comment)
+- 이미지 업로드 (/file POST)
+- 댓글 (@{bloggerName}/{postId}/comments)
   - 댓글 작성 (/ POST)
   - 댓글 수정 (/{commentId} PATCH)
   - 댓글 삭제 (/{commentId} DELETE)
-- 관리자 도구 (/setting)
-  - 블로그 설정 (/blog-information PUT or 각각 PATCH)
-  - 트랙백 허용 설정 (/trackback PATCH)
-- RSS (/rss)
-  - 블로그 컨텐츠를 요약해서 외부 검색 엔진에 노출시키는 방법?
-  - 네이버 블로그 에서 RSS 파일을 보니 해당 블로그 정보 요약, 최근 댓글 링크 등의 내용을 갖고있다
-  
+
 ### DB Schema
 
 - 블로거 (blogger)
@@ -54,11 +91,11 @@ STOVE Dev Camp 서버 전형 과제
   |id|INTEGER|`PK` `AUTO_INCREMENT`||인덱스|
   |blogger_id|INTEGER|`FK blogger.id` `UNIQUE` `NOT NULL`||외부 키|
   |title|STRING(40)|`NOT NULL`||블로그 이름|
-  |subtitle|STRING(100)||BLANK('')|블로그 소개|
+  |introduce|STRING(100)||BLANK('')|블로그 소개|
   |trackback|BIT|`NOT NULL`|1|1: 동의<br>0: 거부|
 
 
-- 글 목록 (list)
+- 글 목록 (category)
   - blog 1:N ON DELETE CASCADE ON UPDATE CASCADE
 
   |컬럼 명|타입|제약조건|디폴트 값|설명|
@@ -71,14 +108,14 @@ STOVE Dev Camp 서버 전형 과제
 
 
 - 게시글 (post)
+  - 게시글을 블로그가 아닌 유저에 종속시키면 여러모로 편할 것 같다.
   - blog 1:N ON DELETE CASCADE ON UPDATE CASCADE
-  - list 1:N ON DELETE CASCADE ON UPDATE CASCADE
+  - category 1:N ON DELETE CASCADE ON UPDATE CASCADE
 
   |컬럼 명|타입|제약조건|디폴트 값|설명|
   |--|--|--|--|--|
   |id|INTEGER|`PK` `AUTO_INCREMENT`||인덱스|
   |blog_id|INTEGER|`FK blog.id` `NOT NULL`||블로그 외부 키|
-  |list_id|INTEGER|`FK list.id` `NOT NULL`||글 목록 외부 키|
   |title|STRING(40)|`NOT NULL`||글 제목|
   |contents|TEXT||BLANK('')|글 내용|
   |views|INTEGER||0|조회수|
@@ -101,15 +138,3 @@ STOVE Dev Camp 서버 전형 과제
   |parent|INTEGER|`comment.id` `NOT NULL`|0|답글 부모<br>0: 원댓글<br>x: 부모 댓글 id|
   |created_at|DATETIME||now()|생성 시간|
   |updated_at|DATETIME||now()|수정 시간|
-
-- 트랙백 (trackback) 
-  - 트랙백 기능을 관계 테이블로 나눠도 되지만, 트랙백 받는 posts에서 JSON으로 관리해도 될 것 같음
-  - post 1:N ON DELETE CASCADE ON UPDATE CASCADE
-  - post_id_linked_id_UNIQUE UNIQUE
-
-  |컬럼 명|타입|제약조건|디폴트 값|설명|
-  |--|--|--|--|--|
-  |id|INTEGER|`PK` `AUTO_INCREMENT`||인덱스|
-  |post_id|INTEGER|`FK post.id` `NOT NULL`||트랙백 주체 id|
-  |linked_id|INTEGER|`FK post.id` `NOT NULL`||연결된 글 id|  
-  |created_at|DATETIME||now()|생성 시간|

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="fragments/config :: configFragment">
+    </head>
+
+    <body>
+        <th:block th:replace="fragments/header :: headerFragment"></th:block>
+        <script type="text/javascript" th:src="@{/js/post_ajax.js}"></script>
+        <script type="text/javascript" th:src="@{/js/post.js}"></script>
+        <form th:action="@{/write}" th:id="post-form" method="POST">
+            <input type="hidden" th:value="${post.getId()}" id="id" name="id">
+            <div>
+                <label>카테고리 선택   </label>
+                <select id="category", name="category">
+                    <option value="-1" selected>선택 안함</option>
+                    <option th:each="category: ${categories.getCategory()}"
+                            th:value="${category.getKey()}"
+                            th:utext="${category.getValue()}"></option>
+                </select>
+            </div>
+            <br>
+            <label>글 제목 :  </label>
+            <input type="text" id="title" name="title" th:value="${post.getTitle()}"> <br>
+            <label>내용</label>
+            <br><br>
+
+            <label>파일 첨부</label>
+            <input type="file" id="file" onchange="uploadImage()">
+            <br><br>
+
+            <div id="contents-filed">
+                <textarea id="user-see" rows="20" cols="100" th:text="${post.getContents().replaceAll('<br>', '&#10')}"></textarea>
+            </div>
+            <div>
+                <textarea style="display: none" id="contents" name="contents"></textarea>
+            </div>
+        </form>
+        <button onclick="submit()">저장</button>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="fragments/config :: configFragment">
+    </head>
+
+    <body>
+        <th:block th:replace="fragments/header :: headerFragment"></th:block>
+<!--        <th:block th:replace="fragments/header :: headerFragment"></th:block>-->
+        <div th:if="${isAuthenticated}">
+            <a th:href="@{'@'+${blogger.name}}">내 블로그로 가기</a>
+            <div style="text-align: right">
+                <a href="/write"> 글 쓰기 </a>
+                <a href="/auth/logout"> 로그아웃 </a>
+            </div>
+            <h1 style="text-align: center"> 최신 Top 10 글 목록 </h1>
+            <th:block th:replace="fragments/post_list :: postListFragment(${posts})"></th:block>
+        </div>
+        <div th:unless="${isAuthenticated}">
+            <h1>나만의 블로그에 기록해요</h1>
+            <h3>회원가입 후 로그인을 해봅시다.</h3>
+            <h1>로그인 폼</h1>
+            <form action="/auth/signin" method="POST">
+                <input type="text" name="email" placeholder="example@naver.com">
+                <input type="password" name="password">
+                <input type="submit">
+            </form>
+            <h1>회원가입 폼</h1>
+            <form action="/auth/signup" method="POST">
+                <input type="text" name="email" placeholder="example@naver.com">
+                <input type="text" name="name" placeholder="fortice">
+                <input type="password" name="password">
+                <input type="submit">
+            </form>
+        </div>
+    </body>
+</body>
+</html>

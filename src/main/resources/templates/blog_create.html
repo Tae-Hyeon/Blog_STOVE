@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head th:replace="fragments/config :: configFragment">
+    </head>
+
+    <body>
+    <th:block th:replace="fragments/header :: headerFragment"></th:block>
+    <div layout:fragment="contents">
+        <form action="/blog" method="POST">
+            <input type="text" id="title" name="title">
+            <input type="text" id="introduce" name="introduce">
+            <input type="submit">
+        </form>
+    </div>
+</html>

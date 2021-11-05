@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="fragments/config :: configFragment">
+    </head>
+
+    <body>
+        <th:block th:replace="fragments/header :: headerFragment"></th:block>
+        <script type="text/javascript" th:src="@{/js/post_ajax.js}"></script>
+        <script type="text/javascript" th:src="@{/js/post.js}"></script>
+        <form th:action="@{/write}" id="post-form" th:object="${postForm}" method="POST">
+            <input type="hidden" id="id" name="id" value="0">
+            <div>
+                <label>카테고리 선택   </label>
+                <select id="category" name="category">
+                    <option value="-1" selected>선택 안함</option>
+                    <option th:each="category: ${categories.getCategory()}"
+                            th:value="${category.getKey()}"
+                            th:utext="${category.getValue()}"></option>
+                </select>
+            </div>
+            <br>
+            <label>글 제목 :  </label>
+            <input type="text" th:field="*{title}"> <br>
+            <label>내용</label>
+            <br><br>
+
+            <label>파일 첨부</label>
+            <input type="file" id="file" onchange="uploadImage()">
+            <br><br>
+
+            <div id="contents-filed">
+                <textarea id="user-see" rows="20" cols="100"></textarea>
+            </div>
+            <div>
+                <textarea style="visibility: hidden" th:field="*{contents}"></textarea>
+            </div>
+        </form>
+        <button onclick="submit()">글 작성</button>
+    </body>
+</html>

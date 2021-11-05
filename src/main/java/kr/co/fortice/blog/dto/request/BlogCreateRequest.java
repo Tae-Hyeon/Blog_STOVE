@@ -12,10 +12,10 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class BlogCreateRequest {
     @NotBlank
-    String title;
+    private String title;
 
     @NotBlank
-    String introduce;
+    private String introduce;
 
     public Blog toEntity(Blogger blogger) {
         return Blog.builder()

@@ -4,9 +4,12 @@ STOVE Dev Camp 서버 전형 과제
 
 # 사용 기술 및 환경
 - localhost:8080
-- Spring Boot 2.5.5
+- Spring Boot
+- Spring security (session)
+  - 현재 main 브랜치는 자동 로그인 상태
+  - logout 시 로그인 버튼 또는 /auth/login 요청 필요
+- Thymeleaf
 - MySQL 8.0
-- 
 
 # 필요 설정
 - MySQL 8.0
@@ -138,3 +141,11 @@ src
   |parent|INTEGER|`comment.id` `NOT NULL`|0|답글 부모<br>0: 원댓글<br>x: 부모 댓글 id|
   |created_at|DATETIME||now()|생성 시간|
   |updated_at|DATETIME||now()|수정 시간|
+
+
+# 소감
+- 처음에 욕심을 많이 부린 것 같다.
+- UI 구성하는데 시간은 많이 쓰는데, 지식이 부족했다.
+  - 서버 사이드에서 뷰를 컨트롤하다보니 생각이 여러번 꼬였다.
+- 인증에 대한 내용을 늦게 발견해서 구현한 상태로 진행해서 아쉬웠다.
+- 서버에서 static 자원에 대해 재시작 없이 접근하는 방법을 못찾았다. 

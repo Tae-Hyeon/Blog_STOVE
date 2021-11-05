@@ -64,11 +64,11 @@ src
   - 글 작성 페이지 (/write GET)
   - 글 작성 (/write POST) --> 글 조회
   - 글 수정 페이지(/write?id= GET)
-  - 글 수정 (/@{bloggerName}/{postId} POST) --> 글 조회
+  - 글 수정 (/write POST) --> 글 조회
   - 글 조회 (/@{bloggerName}/{postId} GET)
-  - 글 삭제 (/{postId} DELETE)
+  - 글 삭제 (/@{bloggerName}/{postId} DELETE)
 - 이미지 업로드 (/file POST)
-- 댓글 (@{bloggerName}/{postId}/comments)
+- 댓글 (@{bloggerName}/{postId}/comment)
   - 댓글 작성 (/ POST)
   - 댓글 수정 (/{commentId} PATCH)
   - 댓글 삭제 (/{commentId} DELETE)

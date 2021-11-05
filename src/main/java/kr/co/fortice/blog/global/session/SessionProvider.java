@@ -20,8 +20,8 @@ public class SessionProvider implements AuthenticationProvider {
         UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) authentication;
         //System.out.println("세션 프로바이더");
         //System.out.println(authenticationToken.toString());
-        String email = authenticationToken.getName();
-        String password = (String) authenticationToken.getCredentials();
+        String email = "email@folog.co.kr";//authenticationToken.getName();
+        String password = "$2a$10$L7Xx9jFDQhn8BDBPL6RFau08zSg/Bmuq3B4I9.4GrxsQObV1ZyuOy";//(String) authenticationToken.getCredentials();
         // UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
         CustomUserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
 

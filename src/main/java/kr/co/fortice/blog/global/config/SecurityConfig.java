@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public SessionAuthenticationFilter sessionAuthenticationFilter() throws Exception{
         SessionAuthenticationFilter sessionAuthenticationFilter = new SessionAuthenticationFilter(authenticationManager());
-        sessionAuthenticationFilter.setFilterProcessesUrl("/auth/signin");
+        sessionAuthenticationFilter.setFilterProcessesUrl("/auth/login");
         sessionAuthenticationFilter.setAuthenticationSuccessHandler(signInSuccessHandler());
         sessionAuthenticationFilter.afterPropertiesSet();
         return sessionAuthenticationFilter;
@@ -66,9 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 // 인증이 필요한 경우인지 ant형식으로 url 지정
                 .authorizeRequests()
-                        .antMatchers("/").permitAll()
-                        .antMatchers("/@**").permitAll()
-                        .antMatchers("/auth/**").permitAll()
+                        .antMatchers("/**").permitAll()
                         .anyRequest().authenticated()
 
                 // 로그인 폼 설정
@@ -86,14 +84,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID")
                     .logoutUrl("/auth/logout")
-                    .logoutSuccessUrl("/index")
+                    .logoutSuccessUrl("/")
 
                 // Session 설정 필요할 때 세션 생성 (항상 : ALWAYS)
                 .and()
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                    .invalidSessionUrl("/index")
+                    .invalidSessionUrl("/")
                     .maximumSessions(1)
-                        .expiredUrl("/index");
+                        .expiredUrl("/");
     }
 }

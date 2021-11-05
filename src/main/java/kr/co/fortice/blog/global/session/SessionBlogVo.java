@@ -12,6 +12,8 @@ public class SessionBlogVo {
     private final String introduce;
 
     public static SessionBlogVo of(Blog blog) {
+        if(blog == null)
+            return null;
         return SessionBlogVo.builder()
                 .id(blog.getId())
                 .title(blog.getTitle())

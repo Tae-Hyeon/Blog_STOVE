@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Collections;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,19 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public CustomUserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<Blogger> blogger = bloggerRepository.findBloggerByEmail(email);
+
+        if (blogger.isEmpty()) {
+            Blogger newBlogger = bloggerRepository.save(Blogger.builder()
+                    .id(10)
+                    .email("email@folog.co.kr")
+                    .password("$2a$10$L7Xx9jFDQhn8BDBPL6RFau08zSg/Bmuq3B4I9.4GrxsQObV1ZyuOy")
+                    .name("한태현test")
+                    .authority(Blogger.Authority.ROLE_BLOGGER)
+                    .build());
+            return toUserDetails(newBlogger);
+        }
+
         return bloggerRepository.findBloggerByEmail(email)
                 .map(this::toUserDetails)
                 .orElseThrow(() -> new UsernameNotFoundException(email + " -> 데이터베이스에서 찾을 수 없습니다."));

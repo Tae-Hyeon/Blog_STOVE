@@ -97,23 +97,9 @@ src
   |introduce|STRING(100)||BLANK('')|블로그 소개|
   |trackback|BIT|`NOT NULL`|1|1: 동의<br>0: 거부|
 
-
-- 글 목록 (category)
-  - blog 1:N ON DELETE CASCADE ON UPDATE CASCADE
-
-  |컬럼 명|타입|제약조건|디폴트 값|설명|
-  |--|--|--|--|--|
-  |id|INTEGER|`PK` `AUTO_INCREMENT`||인덱스|
-  |blog_id|INTEGER|`FK blog.id` `NOT NULL`||블로그 id|
-  |title|STRING(40)|`NOT NULL`||글 목록 제목|
-  |count|INTEGER||0|글 개수|
-  |created_at|DATETIME||now()|생성 시간|
-
-
 - 게시글 (post)
   - 게시글을 블로그가 아닌 유저에 종속시키면 여러모로 편할 것 같다.
   - blog 1:N ON DELETE CASCADE ON UPDATE CASCADE
-  - category 1:N ON DELETE CASCADE ON UPDATE CASCADE
 
   |컬럼 명|타입|제약조건|디폴트 값|설명|
   |--|--|--|--|--|

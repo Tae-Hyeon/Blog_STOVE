@@ -47,6 +47,8 @@ public class SessionUtil {
     public static Integer getBlogId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        if(userDetails.getBlog() == null)
+            return null;
         return userDetails.getBlog().getId();
     }
 

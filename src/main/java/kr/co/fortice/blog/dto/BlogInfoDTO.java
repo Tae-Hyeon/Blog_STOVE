@@ -13,6 +13,8 @@ public class BlogInfoDTO {
     String introduce;
 
     public static BlogInfoDTO of(Blog blog) {
+        if(blog == null)
+            return null;
         return BlogInfoDTO.builder()
                 .id(blog.getId())
                 .title(blog.getTitle())

@@ -29,7 +29,7 @@ public class BlogController {
         //TODO: 본인 소유의 블로그인지 확인해야함
         BlogMainResponse mainResponse = blogService.getBlogMain(bloggerName);
         if(SessionUtil.isAuthenticated() && bloggerName.equals(SessionUtil.getBloggerName())) {
-            if(mainResponse.getBlog().getId() == null)
+            if(mainResponse.getBlog() == null)
                 return "redirect:/blog";
             model.addAttribute("my", true);
         }

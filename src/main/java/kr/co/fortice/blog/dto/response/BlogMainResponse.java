@@ -19,6 +19,11 @@ public class BlogMainResponse {
     private List<PostSimpleInfoDTO> posts;
 
     public static BlogMainResponse of(Blogger blogger) {
+        if(blogger.getBlog() == null)
+            return BlogMainResponse.builder()
+                    .blogger(BloggerInfoDTO.of(blogger))
+                    .build();
+        
         return BlogMainResponse.builder()
                 .blogger(BloggerInfoDTO.of(blogger))
                 .blog(BlogInfoDTO.of(blogger.getBlog()))

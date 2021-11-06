@@ -9,8 +9,10 @@
     <th:block th:replace="fragments/header :: headerFragment"></th:block>
     <div layout:fragment="contents">
         <form action="/blog" method="POST">
-            <input type="text" id="title" name="title">
-            <input type="text" id="introduce" name="introduce">
+            <label>블로그 제목: </label>
+            <input type="text" id="title" name="title"> <br>
+            <label>블로그 소개: </label>
+            <input type="text" id="introduce" name="introduce"> <br>
             <input type="submit">
         </form>
     </div>

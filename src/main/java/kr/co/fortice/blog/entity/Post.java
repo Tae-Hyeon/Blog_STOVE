@@ -36,6 +36,8 @@ public class Post {
     @Column(name = "contents")
     private String contents;
 
+    @Column(name = "views")
+    private Integer views;
     //TODO: 비밀글 관련 설정 추가
 
     @Column(name = "created_at")
@@ -48,6 +50,10 @@ public class Post {
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     List<Comment> comments = new ArrayList<>();
+
+    public void plusViews() {
+        this.views += 1;
+    }
 
     public void update(PostUpdateRequest request) {
         this.title = request.getTitle();

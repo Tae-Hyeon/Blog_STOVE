@@ -10,6 +10,7 @@ import kr.co.fortice.blog.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,11 +26,14 @@ public class CommentService {
                 .map(CommentDTO::of)
                 .collect(Collectors.toList());
     }
+
+    @Transactional
     public CommentDTO createComment(Integer postId, CommentCreateRequest request) {
         //TODO: if 차단 or 댓글 금지 create 금지
         return CommentDTO.of(commentRepository.save(request.toEntity(postId)));
     }
 
+    @Transactional
     public void patchContents(Integer commentId, String contents) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(DataNotFoundException::new);
@@ -40,6 +44,7 @@ public class CommentService {
         //TODO: else FORBIDDEN
     }
 
+    @Transactional
     public void deleteComment(Integer commentId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(DataNotFoundException::new);

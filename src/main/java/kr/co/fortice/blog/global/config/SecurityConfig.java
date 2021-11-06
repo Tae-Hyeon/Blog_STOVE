@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public SessionAuthenticationFilter sessionAuthenticationFilter() throws Exception{
         SessionAuthenticationFilter sessionAuthenticationFilter = new SessionAuthenticationFilter(authenticationManager());
-        sessionAuthenticationFilter.setFilterProcessesUrl("/auth/login");
+        sessionAuthenticationFilter.setFilterProcessesUrl("/auth/signin");
         sessionAuthenticationFilter.setAuthenticationSuccessHandler(signInSuccessHandler());
         sessionAuthenticationFilter.afterPropertiesSet();
         return sessionAuthenticationFilter;

@@ -5,8 +5,9 @@
     </head>
 
     <body>
+        <script type="text/javascript" th:src="@{/js/blog_main.js}"></script>
         <th:block th:replace="fragments/header :: headerFragment"></th:block>
-        <div style="text-align: right">
+        <div th:if="${#httpSession.getAttribute('id')}" style="text-align: right">
             <a href="/write"> 글 쓰기 </a>
             <a href="/auth/logout"> 로그아웃 </a>
         </div>
@@ -16,6 +17,6 @@
             <h3 th:text="${blog.getIntroduce()}"></h3>
         </div>
 
-        <th:block th:replace="fragments/post_list :: postListFragment(${posts})"></th:block>
+        <th:block th:if="${posts}" th:replace="fragments/post_list :: postListFragment(${posts}, ${isMine})"></th:block>
     </body>
 </html>

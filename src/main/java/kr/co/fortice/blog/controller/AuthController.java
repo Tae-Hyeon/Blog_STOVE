@@ -32,8 +32,6 @@ public class AuthController {
         model.put("isAuthenticated", true);
         model.put("blogger", authService.getBloggerInfo(bloggerId));
 
-        System.out.println(model.toString());
-
         return PageList.INDEX_PAGE.resource();
     }
 }

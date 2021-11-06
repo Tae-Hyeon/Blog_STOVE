@@ -7,7 +7,7 @@ STOVE Dev Camp 서버 전형 과제
 - Spring Boot
 - Spring security (session)
   - 현재 main 브랜치는 자동 로그인 상태
-  - logout 시 로그인 버튼 또는 /auth/login 요청 필요
+  - 로그인이 안되어 있을 시 로그인 버튼 또는 /auth/signin 요청 필요
 - Thymeleaf
 - MySQL 8.0
 

@@ -12,4 +12,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     Optional<Post> findPostById(Integer postId);
 
     List<Post> findTop10ByOrderByCreatedAtDesc();
+
+    List<Post> findAllByIdIn(List<Integer> ids);
 }

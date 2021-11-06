@@ -30,7 +30,6 @@ public class FileUtil {
         filename = Long.toString(new Date().getTime()) + "-" + Integer.toString((int)(Math.random() * 100)) + ".png";//URLEncoder.encode(filename, StandardCharsets.UTF_8);
         File dest = new File(GlobalVO.getImagePath() + filename);
         file.transferTo(dest);
-        System.out.println(filename);
         return filename;
     }
 

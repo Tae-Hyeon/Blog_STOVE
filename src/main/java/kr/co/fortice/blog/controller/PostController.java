@@ -2,6 +2,7 @@ package kr.co.fortice.blog.controller;
 
 import kr.co.fortice.blog.dto.PostInfoDTO;
 import kr.co.fortice.blog.dto.request.PostCreateRequest;
+import kr.co.fortice.blog.dto.request.PostDeleteListRequest;
 import kr.co.fortice.blog.dto.request.PostUpdateRequest;
 import kr.co.fortice.blog.dto.response.PostResponse;
 import kr.co.fortice.blog.global.common.GlobalVO;
@@ -17,6 +18,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
@@ -26,6 +32,8 @@ public class PostController {
 
     @GetMapping(value = "/write")
     public String getWritePostPage(@RequestParam(required = false) Integer id, Model model) {
+        if(SessionUtil.isAuthenticated() && SessionUtil.getBlogId() == null)
+            return "redirect:/blog";
         model.addAttribute("postForm", new PostUpdateRequest());
         model.addAttribute("categories", categoryService.getCategories());
         if(id == null) {
@@ -36,13 +44,15 @@ public class PostController {
     }
 
     @PostMapping("/write")
-    public String createPost(@ModelAttribute("request") PostUpdateRequest request) {
+    public String createPost(@ModelAttribute("request") PostUpdateRequest request) throws UnsupportedEncodingException {
         //model.addAttribute("post", postService.createPost(request));
-        System.out.println(request.getId());
+        System.out.println("post write");
         System.out.println(request.getContents());
+        System.out.println(SessionUtil.getBloggerName());
+        String bloggerName = SessionUtil.getBloggerName();
         if(request.getId() == 0)
-            return "redirect:/@" + SessionUtil.getBloggerName() + '/' + postService.createPost(request); //PageList.POST_READ_PAGE.resource();
-        return "redirect:/@" + SessionUtil.getBloggerName() + '/' + postService.updatePost(request); //PageList.POST_READ_PAGE.resourc
+            return "redirect:/@" + URLEncoder.encode(bloggerName, "UTF-8") + '/' + postService.createPost(request); //PageList.POST_READ_PAGE.resource();
+        return "redirect:/@" + URLEncoder.encode(bloggerName, "UTF-8") + '/' + postService.updatePost(request); //PageList.POST_READ_PAGE.resourc
     }
 
     @GetMapping("/@{bloggerName}/{postId}")
@@ -54,8 +64,19 @@ public class PostController {
     }
 
     @DeleteMapping("/@{bloggerName}/{postId}")
-    public ResponseEntity<String> deletePost(@PathVariable("postId") Integer postId, Model model) {
+    public ResponseEntity<String> deletePost(@PathVariable("postId") Integer postId) {
         postService.deletePost(postId);
+        return ResponseEntity.ok("삭제 성공"); //PageList.POST_READ_PAGE.resource();
+    }
+
+    @DeleteMapping("/@{bloggerName}")
+    public ResponseEntity<String> deletePosts(@ModelAttribute("request") PostDeleteListRequest request) {
+        System.out.println(request.getIds());
+//        postService.deletePosts(Arrays.stream(postIds.split(","))
+//                .map(Integer::parseInt)
+//                .collect(Collectors.toList())
+//        );
+        postService.deletePosts(request.getIds());
         return ResponseEntity.ok("삭제 성공"); //PageList.POST_READ_PAGE.resource();
     }
 

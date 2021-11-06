@@ -4,6 +4,7 @@ import kr.co.fortice.blog.dto.BlogInfoDTO;
 import kr.co.fortice.blog.entity.Blog;
 import kr.co.fortice.blog.entity.Blogger;
 import lombok.NoArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -30,9 +31,6 @@ public class SessionUtil {
                 .id(getBloggerId())
                 .build();
     }
-//    private Boolean isAuthenticationNull(Authentication authentication) {
-//        return (authentication == null || authentication.getName() == null);
-//    }
 
     public static String getBloggerName() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -42,6 +40,15 @@ public class SessionUtil {
 
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         return userDetails.getNickname();
+    }
+
+    public static void updateBlogInfo(Blog blog) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        userDetails.setBlog(SessionBlogVo.of(blog));
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+        System.out.println(getBlogId());
     }
 
     public static Integer getBlogId() {

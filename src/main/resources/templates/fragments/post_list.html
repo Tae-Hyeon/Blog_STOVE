@@ -1,10 +1,15 @@
 <html lagn="ko" xmlns:th="http://www.thymeleaf.org">
-    <div style="text-align: center" th:fragment="postListFragment(posts)">
+    <div style="text-align: center" th:fragment="postListFragment(posts, isMine)">
+        <button th:if="${isMine}" id="checkbox-button" th:onclick="openCheckBox()">선택상자 열기</button>
+        <button th:if="${isMine}" id="delete-button" th:onclick="deletePosts()" style="display:none;">삭제하기</button>
         <div th:if="${posts}" style="border: black 1px">
             <div th:each="post : ${posts}">
-                <a th:href="'@'+${post.getBloggerName()} + '/' + ${post.getId()}" th:text="${post.getTitle()}"></a><br>
-                <img th:if="${post.getImage()}" th:src="${post.getImage()}" alt="" style="width:300px;height: 200px"><br>
-                <p th:text="${post.getSummary()}"></p><br>
+                <input th:if="${isMine}" type="checkbox" class="delete" name="delete" th:value="${post.getId()}" style="display: none">
+                <span class="post-wrapper" th:id="'post' + ${post.getId()}" style="border: 1px solid black">
+                    <a th:href="'@'+${post.getBloggerName()} + '/' + ${post.getId()}" th:text="${post.getTitle()}"></a><br>
+                    <img th:if="${post.getImage()}" th:src="${post.getImage()}" alt="" style="width:300px;height: 200px"><br>
+                    <p th:text="${post.getSummary()}"></p>
+                </span>
             </div>
         </div>
     </div>

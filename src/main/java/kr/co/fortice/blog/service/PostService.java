@@ -37,8 +37,8 @@ public class PostService {
         return post.getId();
     }
 
+    @Transactional
     public Integer updatePost(PostUpdateRequest request) {
-
         Post post = postRepository.findPostById(request.getId())
                         .orElseThrow(DataNotFoundException::new);
 
@@ -74,11 +74,20 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void deletePost(Integer postId) {
         Post post = postRepository.findPostById(postId)
                 .orElseThrow(DataNotFoundException::new);
         if(post.getBlog().getId().equals(SessionUtil.getBlogId()))
-            postRepository.deleteById(postId);
+            postRepository.delete(post);
+    }
+
+    @Transactional
+    public void deletePosts(List<Integer> postIds) {
+        List<Post> posts = postRepository.findAllByIdIn(postIds).stream()
+                .filter(post -> post.getBlog().getId().equals(SessionUtil.getBlogId()))
+                .collect(Collectors.toList());
+        postRepository.deleteAll(posts);
     }
 
     public String uploadImage(MultipartFile image) throws IOException {

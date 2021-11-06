@@ -15,7 +15,7 @@
                 <a href="/auth/logout"> 로그아웃 </a>
             </div>
             <h1 style="text-align: center"> 최신 Top 10 글 목록 </h1>
-            <th:block th:replace="fragments/post_list :: postListFragment(${posts})"></th:block>
+            <th:block th:if="${posts}" th:replace="fragments/post_list :: postListFragment(${posts}, false)"></th:block>
         </div>
         <div th:unless="${isAuthenticated}">
             <h1>나만의 블로그에 기록해요</h1>

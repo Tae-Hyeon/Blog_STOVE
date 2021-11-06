@@ -2,6 +2,7 @@ package kr.co.fortice.blog.controller;
 
 import kr.co.fortice.blog.dto.PostInfoDTO;
 import kr.co.fortice.blog.dto.request.PostCreateRequest;
+import kr.co.fortice.blog.dto.request.PostDeleteListRequest;
 import kr.co.fortice.blog.dto.request.PostUpdateRequest;
 import kr.co.fortice.blog.dto.response.PostResponse;
 import kr.co.fortice.blog.global.common.GlobalVO;
@@ -63,18 +64,19 @@ public class PostController {
     }
 
     @DeleteMapping("/@{bloggerName}/{postId}")
-    public ResponseEntity<String> deletePost(@PathVariable("postId") Integer postId, Model model) {
+    public ResponseEntity<String> deletePost(@PathVariable("postId") Integer postId) {
         postService.deletePost(postId);
         return ResponseEntity.ok("삭제 성공"); //PageList.POST_READ_PAGE.resource();
     }
 
     @DeleteMapping("/@{bloggerName}")
-    public ResponseEntity<String> deletePosts(@RequestParam("ids") String postIds) {
-        System.out.println(postIds);
-        postService.deletePosts(Arrays.stream(postIds.split(","))
-                .map(Integer::parseInt)
-                .collect(Collectors.toList())
-        );
+    public ResponseEntity<String> deletePosts(@ModelAttribute("request") PostDeleteListRequest request) {
+        System.out.println(request.getIds());
+//        postService.deletePosts(Arrays.stream(postIds.split(","))
+//                .map(Integer::parseInt)
+//                .collect(Collectors.toList())
+//        );
+        postService.deletePosts(request.getIds());
         return ResponseEntity.ok("삭제 성공"); //PageList.POST_READ_PAGE.resource();
     }
 

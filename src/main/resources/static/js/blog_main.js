@@ -16,16 +16,18 @@ let deletePosts = () => {
     for(let i = 0; i < checkedBoxs.length; i++) {
         ids.push(parseInt(checkedBoxs[i].value));
     }
+    let formData = new FormData();
+    formData.append("ids", ids)
     const url = $(location).attr('pathname')
     $.ajax({
         url: url,
         processData: false,
         contentType: false,
-        data: {"ids":ids},
+        data: formData,
         dataType: 'json',
         type: 'DELETE',
         complete: (result) => {
-            //location.replace(url)
+            location.reload()
         }
     });
 }

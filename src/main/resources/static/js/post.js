@@ -46,3 +46,13 @@ let submit = async () => {
     await parseContent();
     await $('#post-form')[0].submit()
 }
+
+let copyTrackbackURL = () => {
+    const url = $(location).attr('origin') + '/trackback' + $(location).attr('pathname');
+    let trackbackURL = $('#trackback-url')[0]
+    trackbackURL.type = "text"
+    trackbackURL.value = url;
+    trackbackURL.select();
+    document.execCommand("copy");
+    trackbackURL.type = "hidden"
+}

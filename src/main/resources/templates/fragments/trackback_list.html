@@ -1,0 +1,13 @@
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+    <div style="text-align: center" th:fragment="trackbackListFragment(posts)">
+        <div th:if="${posts}" style="border: black 1px">
+            <div th:each="post : ${posts}">
+                <h1>트랙백 리스트</h1>
+                <div class="post-wrapper" th:id="'post' + ${post.getId()}" style="border: 1px solid black">
+                    <a th:href="'/@'+${post.getBloggerName()} + '/' + ${post.getId()}" th:text="${post.getTitle()}"></a><br>
+                    <p th:text="${post.getSummary()}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</html>

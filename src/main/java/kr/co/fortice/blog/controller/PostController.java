@@ -4,12 +4,14 @@ import kr.co.fortice.blog.dto.PostInfoDTO;
 import kr.co.fortice.blog.dto.request.PostCreateRequest;
 import kr.co.fortice.blog.dto.request.PostDeleteListRequest;
 import kr.co.fortice.blog.dto.request.PostUpdateRequest;
+import kr.co.fortice.blog.dto.request.TrackbackRequest;
 import kr.co.fortice.blog.dto.response.PostResponse;
 import kr.co.fortice.blog.global.common.GlobalVO;
 import kr.co.fortice.blog.global.session.SessionUtil;
 import kr.co.fortice.blog.service.CategoryService;
 import kr.co.fortice.blog.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -32,11 +35,11 @@ public class PostController {
 
     @GetMapping(value = "/write")
     public String getWritePostPage(@RequestParam(required = false) Integer id, Model model) {
-        if(SessionUtil.isAuthenticated() && SessionUtil.getBlogId() == null)
+        if (SessionUtil.isAuthenticated() && SessionUtil.getBlogId() == null)
             return "redirect:/blog";
         model.addAttribute("postForm", new PostUpdateRequest());
         model.addAttribute("categories", categoryService.getCategories());
-        if(id == null) {
+        if (id == null) {
             return "post_write"; //PageList.POST_CREATE_PAGE.resource();
         }
         model.addAttribute("post", postService.getPostWithOutComments(id));
@@ -50,7 +53,7 @@ public class PostController {
         System.out.println(request.getContents());
         System.out.println(SessionUtil.getBloggerName());
         String bloggerName = SessionUtil.getBloggerName();
-        if(request.getId() == 0)
+        if (request.getId() == 0)
             return "redirect:/@" + URLEncoder.encode(bloggerName, "UTF-8") + '/' + postService.createPost(request); //PageList.POST_READ_PAGE.resource();
         return "redirect:/@" + URLEncoder.encode(bloggerName, "UTF-8") + '/' + postService.updatePost(request); //PageList.POST_READ_PAGE.resourc
     }
@@ -60,6 +63,7 @@ public class PostController {
         PostResponse response = postService.getPost(postId);
         model.addAttribute("post", response.getPost());
         model.addAttribute("comments", response.getComments());
+        model.addAttribute("trackbacks", response.getLinkedPosts());
         return "post"; //PageList.POST_READ_PAGE.resource();
     }
 
@@ -71,7 +75,6 @@ public class PostController {
 
     @DeleteMapping("/@{bloggerName}")
     public ResponseEntity<String> deletePosts(@ModelAttribute("request") PostDeleteListRequest request) {
-        System.out.println(request.getIds());
 //        postService.deletePosts(Arrays.stream(postIds.split(","))
 //                .map(Integer::parseInt)
 //                .collect(Collectors.toList())
@@ -80,10 +83,18 @@ public class PostController {
         return ResponseEntity.ok("삭제 성공"); //PageList.POST_READ_PAGE.resource();
     }
 
+    @PostMapping(value = "/trackback/@{bloggerName}/{postId}")
+    public @ResponseBody
+    ResponseEntity<String> trackback(@PathVariable("postId") Integer postId, @ModelAttribute("request")TrackbackRequest request){;
+        postService.trackback(postId, request.getLinkedPostId());
+        return ResponseEntity.ok("트랙백 성공");
+    }
+
     @PostMapping(value = "/file", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public @ResponseBody ResponseEntity<String> uploadImage(@RequestPart MultipartFile image, Model model) throws IOException {
+    public @ResponseBody
+    ResponseEntity<String> uploadImage(@RequestPart MultipartFile image) throws IOException {
         String imageURL = postService.uploadImage(image);
-        if(!imageURL.isBlank())
+        if (!imageURL.isBlank())
             return ResponseEntity.ok(GlobalVO.getImageServerURL() + imageURL);
         return ResponseEntity.ok(imageURL);
     }

@@ -32,12 +32,11 @@ public class BlogController {
         //TODO: 본인 소유의 블로그인지 확인해야함
         BlogMainResponse mainResponse = blogService.getBlogMain(bloggerName);
         System.out.println(bloggerName.equals(SessionUtil.getBloggerName()));
-        if(SessionUtil.isAuthenticated() && bloggerName.equals(SessionUtil.getBloggerName())) {
-            if(mainResponse.getBlog() == null)
+        if (SessionUtil.isAuthenticated() && bloggerName.equals(SessionUtil.getBloggerName())) {
+            if (mainResponse.getBlog() == null)
                 return "redirect:/blog";
             model.addAttribute("isMine", true);
-        }
-        else
+        } else
             model.addAttribute("isMine", false);
         model.addAttribute("blogger", mainResponse.getBlogger());
         model.addAttribute("blog", mainResponse.getBlog());

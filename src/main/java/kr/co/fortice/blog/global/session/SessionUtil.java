@@ -12,7 +12,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class SessionUtil {
 
     public static boolean isAuthenticated() {
-        return SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser") ;
     }
 
     public static Integer getBloggerId() {

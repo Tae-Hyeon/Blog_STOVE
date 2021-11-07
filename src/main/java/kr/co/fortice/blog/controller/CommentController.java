@@ -17,20 +17,23 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping
-    public @ResponseBody ResponseEntity<List<CommentDTO>> getComments(
+    public @ResponseBody
+    ResponseEntity<List<CommentDTO>> getComments(
             @PathVariable("postId") Integer postId) {
         return ResponseEntity.ok(commentService.getComments(postId));
     }
 
     @PostMapping
-    public @ResponseBody ResponseEntity<CommentDTO> createComment(
+    public @ResponseBody
+    ResponseEntity<CommentDTO> createComment(
             @PathVariable("postId") Integer postId,
             @ModelAttribute("request") CommentCreateRequest request) {
         return ResponseEntity.ok(commentService.createComment(postId, request));
     }
 
     @PatchMapping("/{commentId}")
-    public @ResponseBody ResponseEntity<Object> patchComment(
+    public @ResponseBody
+    ResponseEntity<Object> patchComment(
             @PathVariable("commentId") Integer commentId,
             @RequestParam String contents) {
         commentService.patchContents(commentId, contents);
@@ -38,7 +41,8 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public @ResponseBody ResponseEntity<Object> deleteComment(
+    public @ResponseBody
+    ResponseEntity<Object> deleteComment(
             @PathVariable("commentId") Integer commentId) {
         commentService.deleteComment(commentId);
         return ResponseEntity.ok("댓글 삭제 성공");

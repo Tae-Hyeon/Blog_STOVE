@@ -23,7 +23,7 @@ public class PostInfoDTO {
                 .title(post.getTitle())
                 .bloggerName(post.getBlog().getBlogger().getName())
                 .contents(post.getContents())
-                .isMine(post.getBlog().getId().equals(SessionUtil.getBlogId()))
+                .isMine(SessionUtil.isAuthenticated() && post.getBlog().getId().equals(SessionUtil.getBlogId()))
                 .created_at(post.getCreatedAt())
                 .build();
     }

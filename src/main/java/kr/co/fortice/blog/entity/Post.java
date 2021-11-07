@@ -51,6 +51,9 @@ public class Post {
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     List<Comment> comments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    List<Trackback> trackbacks = new ArrayList<>();
+
     public void plusViews() {
         this.views += 1;
     }

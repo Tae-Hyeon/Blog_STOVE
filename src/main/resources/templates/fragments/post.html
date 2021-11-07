@@ -11,6 +11,15 @@
                 <button onclick="deletePost()">삭제하기</button>
             </div>
             <div id="contents-wrapper">
+                <div id="trackback-copy">
+                    <button th:onclick="copyTrackbackURL()">트랙백 주소 복사</button>
+                    <input type="hidden" id="trackback-url">
+                </div>
+                <div th:if="${post.getIsMine()}">
+                    <label>트랙백 등록</label>
+                    <input type="text" id="trackback-send-url">
+                    <button id="trackback-send-button" th:onclick="|trackback(${post.getId()})|">보내기</button>
+                </div>
                 <div style="visibility: hidden" id="hidden-contents" th:text="${post.getContents()}">
                 </div>
                 <div th:content="${post.getContents()}">

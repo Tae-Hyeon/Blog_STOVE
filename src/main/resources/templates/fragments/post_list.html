@@ -5,11 +5,11 @@
         <div th:if="${posts}" style="border: black 1px">
             <div th:each="post : ${posts}">
                 <input th:if="${isMine}" type="checkbox" class="delete" name="delete" th:value="${post.getId()}" style="display: none">
-                <span class="post-wrapper" th:id="'post' + ${post.getId()}" style="border: 1px solid black">
+                <div class="post-wrapper" th:id="'post' + ${post.getId()}" style="border: 1px solid black">
                     <a th:href="'@'+${post.getBloggerName()} + '/' + ${post.getId()}" th:text="${post.getTitle()}"></a><br>
                     <img th:if="${post.getImage()}" th:src="${post.getImage()}" alt="" style="width:300px;height: 200px"><br>
                     <p th:text="${post.getSummary()}"></p>
-                </span>
+                </div>
             </div>
         </div>
     </div>

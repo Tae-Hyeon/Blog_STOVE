@@ -72,3 +72,20 @@ let uploadImage = () => {
         }
     });
 }
+
+let trackback = (postId) => {
+    let targetURL = $('#trackback-send-url')[0].value
+    let formData = new FormData()
+    formData.append("linkedPostId", postId);
+    $.ajax({
+        url: targetURL,
+        processData: false,
+        contentType: false,
+        data: formData,
+        dataType: 'json',
+        type: 'POST',
+        complete: (result) => {
+
+        }
+    });
+}

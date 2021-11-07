@@ -8,6 +8,9 @@
 
         <th:block th:replace="fragments/header :: headerFragment"></th:block>
         <th:block th:replace="fragments/post :: postFragment(${post})" ></th:block>
-        <th:block th:replace="fragments/comments :: commentsFragment(${comments})"></th:block>
+        <div>
+            <th:block style="width:50%; float:left" th:replace="fragments/trackback_list :: trackbackListFragment(${trackbacks})"></th:block>
+            <th:block style="width:50%; float:right" th:replace="fragments/comments :: commentsFragment(${comments})"></th:block>
+        </div>
     </body>
 </html>
